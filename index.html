@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>2-Year RLDH Risk Calculator After PELD</title>
+  <meta name="description" content="Research-use clinical-radiographic calculator for estimating 2-year recurrent lumbar disc herniation risk after PELD." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <p class="eyebrow">Research-use clinical-radiographic calculator</p>
+      <h1>2-Year RLDH Risk Calculator After PELD</h1>
+      <p class="subtitle">A research-use calculator for estimating 2-year recurrent lumbar disc herniation risk after percutaneous endoscopic lumbar discectomy.</p>
+      <p class="safety-note">This tool is intended for research-use risk communication and follow-up stratification. It should not be used as a stand-alone treatment-decision instrument.</p>
+    </div>
+  </header>
+
+  <main class="page-shell">
+    <section class="input-panel" aria-labelledby="input-heading">
+      <div class="section-title-row">
+        <h2 id="input-heading">Input variables</h2>
+        <span class="model-badge">Locked full logistic model</span>
+      </div>
+
+      <form id="calculator-form" novalidate>
+        <fieldset class="module-card">
+          <legend>Demographic and clinical information</legend>
+          <div class="form-grid two-col">
+            <label class="field">Age, years<input id="Age" type="number" min="0" max="120" step="1" value="45" inputmode="decimal" /></label>
+            <label class="field">Sex<select id="Sex_male"><option value="0">Female</option><option value="1">Male</option></select></label>
+            <label class="field">BMI, kg/m²<input id="BMI" type="number" min="10" max="60" step="0.1" value="23.0" inputmode="decimal" /></label>
+            <label class="field">Smoking<select id="Smoking_yes"><option value="0">No</option><option value="1">Yes</option></select></label>
+            <label class="field">Alcoholism<select id="Alcoholism_yes"><option value="0">No</option><option value="1">Yes</option></select></label>
+            <label class="field">Hypertension<select id="Hypertension_yes"><option value="0">No</option><option value="1">Yes</option></select></label>
+            <label class="field">Diabetes<select id="Diabetes_yes"><option value="0">No</option><option value="1">Yes</option></select></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="module-card">
+          <legend>Surgical information</legend>
+          <div class="form-grid two-col">
+            <label class="field">Operative segment<select id="Segment_L5S1"><option value="0">L4/5</option><option value="1">L5/S1</option></select></label>
+            <label class="field">Operation time, min<input id="Operation_time" type="number" min="1" max="400" step="1" value="65" inputmode="decimal" /></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="module-card">
+          <legend>Disc degeneration and herniation features</legend>
+          <div class="form-grid two-col">
+            <label class="field">Herniation type<select id="Herniation_type"><option value="protrusion">Protrusion</option><option value="extrusion">Extrusion</option><option value="sequestration">Sequestration</option></select></label>
+            <label class="field">Modic change<select id="Modic_any"><option value="0">Absent</option><option value="1">Present</option></select></label>
+            <label class="field">Pfirrmann grade<select id="Pfirrmann_IVV"><option value="0">I/II/III</option><option value="1">IV/V</option></select></label>
+            <label class="field">Disc height index<input id="Disc_height_index" type="number" min="0" max="1" step="0.01" value="0.32" inputmode="decimal" /></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="module-card">
+          <legend>Biomechanical and sagittal parameters</legend>
+          <div class="form-grid two-col">
+            <label class="field">sROM, degrees<input id="sROM" type="number" min="0" max="40" step="0.1" value="8.0" inputmode="decimal" /></label>
+            <label class="field">Cross-sectional area<input id="Cross_sectional_area" type="number" min="0" max="40" step="0.01" value="8.00" inputmode="decimal" /></label>
+            <label class="field">Lumbar lordosis, degrees<input id="Lumbar_lordosis" type="number" min="-20" max="90" step="0.1" value="35.0" inputmode="decimal" /></label>
+            <label class="field">Sacral slope, degrees<input id="Sacral_slope" type="number" min="-10" max="70" step="0.1" value="22.0" inputmode="decimal" /></label>
+          </div>
+        </fieldset>
+
+        <div class="action-row">
+          <button type="button" class="primary" id="calculate-btn">Calculate risk</button>
+          <button type="button" class="secondary" id="reset-btn">Reset</button>
+          <button type="button" class="secondary" id="download-btn">Download report</button>
+        </div>
+      </form>
+    </section>
+
+    <aside class="result-panel" aria-labelledby="result-heading">
+      <div class="result-card" id="result-card">
+        <p class="result-label">Predicted 2-year RLDH risk</p>
+        <div class="risk-output"><span id="risk-percent">--</span><span class="percent-sign">%</span></div>
+        <div class="category-row"><span id="risk-category" class="category-pill neutral">Enter values</span></div>
+
+        <div class="risk-scale" aria-label="Risk scale">
+          <div class="scale-track">
+            <div class="scale-segment low"></div>
+            <div class="scale-segment intermediate"></div>
+            <div class="scale-segment high"></div>
+            <div class="risk-marker" id="risk-marker" style="left:0%"></div>
+          </div>
+          <div class="scale-labels"><span>0%</span><span>10%</span><span>30%</span><span>100%</span></div>
+        </div>
+
+        <div class="threshold-box">
+          <strong>Risk strata</strong>
+          <p>Low risk: &lt;10%; Intermediate risk: 10%-30%; High risk: &gt;30%.</p>
+        </div>
+
+        <section class="interpretation" aria-labelledby="interpretation-heading">
+          <h2 id="interpretation-heading">Suggested interpretation</h2>
+          <p id="interpretation-text">Enter patient variables and calculate risk. The output will summarize the predicted probability and risk stratum.</p>
+        </section>
+
+        <section class="disclaimer" aria-labelledby="disclaimer-heading">
+          <h2 id="disclaimer-heading">Research-use disclaimer</h2>
+          <p>The predicted probability is intended to support individualized risk communication and postoperative follow-up stratification. It should not be used as a stand-alone indication for revision surgery, fusion surgery, or treatment escalation.</p>
+          <p>This result should be interpreted together with clinical symptoms, neurological findings, imaging results, segmental stability, surgeon judgment, and patient preference.</p>
+        </section>
+      </div>
+
+      <details class="model-info">
+        <summary>Model information</summary>
+        <p>The calculator is based on the locked full prespecified logistic-regression model refit on the complete training cohort. XGBoost was used separately for machine-learning model-level interpretation in the study.</p>
+        <p>Continuous variables are entered in their original clinical units. The validation cohort was not used for predictor selection, threshold selection, or coefficient estimation for the deployment model.</p>
+      </details>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <p>Prototype web-based research-use calculator. Verify all inputs before interpretation.</p>
+  </footer>
+
+  <script src="calculator.js"></script>
+</body>
+</html>
