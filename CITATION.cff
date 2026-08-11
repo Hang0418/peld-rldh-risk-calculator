@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this calculator, cite the associated PELD-RLDH prediction-model manuscript."
+title: "PELD-RLDH Risk Calculator"
+type: software
+version: "PELD_RLDH_V5_20260810"
+date-released: 2026-08-11
+license: MIT
+authors:
+  - name: "PELD-RLDH Prediction Project Authors"
+abstract: "Browser implementation of the frozen multicenter PELD-RLDH prediction equation."
