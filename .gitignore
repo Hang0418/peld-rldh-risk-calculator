@@ -2,3 +2,9 @@
 node_modules/
 _site/
 dist/
+analysis/.cache/
+analysis/data/
+analysis/outputs/
+analysis/*.xlsx
+__pycache__/
+*.py[cod]
