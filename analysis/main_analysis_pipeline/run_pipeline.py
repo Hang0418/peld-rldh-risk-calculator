@@ -146,7 +146,7 @@ STAGES = (
     Stage(
         key="extensions",
         title="5. Frozen-model interpretation and robustness",
-        purpose="Generate Stage 14 stability, subgroup, threshold, and sensitivity analyses.",
+        purpose="Produce stability, subgroup, threshold, and sensitivity analyses.",
         scripts=(
             "scripts/08_stage14_extensions.py",
             "scripts/09_verify_stage14_extensions.py",
@@ -156,38 +156,6 @@ STAGES = (
             f"outputs/{VERSION}/stage14_extensions/stage14_independent_verification.json"
         ),
         gate="Stage 14 verification passes without refitting or reselection.",
-    ),
-    Stage(
-        key="manuscript_validation",
-        title="6. Manuscript-level validation",
-        purpose="Assess calibration, dataset shift, risk strata, and equation reproducibility.",
-        scripts=(
-            "scripts/10_manuscript_validation_analyses.py",
-            "scripts/11_verify_manuscript_validation.py",
-        ),
-        prerequisite=lambda: verification_complete(
-            f"outputs/{VERSION}/stage14_extensions/stage14_independent_verification.json"
-        ),
-        complete=lambda: verification_complete(
-            f"outputs/{VERSION}/stage15_manuscript_validation/stage15_independent_verification.json"
-        ),
-        gate="Stage 15 verification passes; no external cutoff optimization is allowed.",
-    ),
-    Stage(
-        key="assets",
-        title="7. Main manuscript tables and figures",
-        purpose="Build and verify deterministic journal assets from locked results.",
-        scripts=(
-            "scripts/12_build_jama_manuscript_assets.py",
-            "scripts/13_verify_jama_manuscript_assets.py",
-        ),
-        prerequisite=lambda: verification_complete(
-            f"outputs/{VERSION}/stage15_manuscript_validation/stage15_independent_verification.json"
-        ),
-        complete=lambda: verification_complete(
-            f"outputs/{VERSION}/manuscript_assets/asset_verification.json"
-        ),
-        gate="Asset verification passes; this step performs no model fitting.",
     ),
 )
 
@@ -248,7 +216,7 @@ def run(stages: tuple[Stage, ...], python: str) -> None:
 def parse_args() -> argparse.Namespace:
     keys = [stage.key for stage in STAGES]
     parser = argparse.ArgumentParser(
-        description="Plan or run the seven main stages of the active RLDH V5 pipeline."
+        description="Plan or run the five core stages of the active RLDH V5 pipeline."
     )
     parser.add_argument(
         "--run",

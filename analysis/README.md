@@ -23,16 +23,12 @@ predictions, credentials, or local machine paths are included.
 6. `08_stage14_extensions.py` and `09_verify_stage14_extensions.py` implement
    frozen-model interpretation, stability, subgroup, threshold, and sensitivity
    analyses without model reselection.
-7. `10_manuscript_validation_analyses.py` and
-   `11_verify_manuscript_validation.py` assess calibration, dataset shift, risk
-   strata, and published-equation reproducibility.
-
 Shared model and metric functions are in `scripts/rldh_model_utils.py`.
 Standalone equation inference is in
 `scripts/predict_from_published_equation.py`.
 
-The omitted number 04 was a figure-generation utility rather than a required
-model-development or verification step.
+Numbering follows the archived analysis chronology; step 04 is not required by
+the public core workflow.
 
 ## Directory contract
 
@@ -43,7 +39,7 @@ analysis/PELD术后RLDH.xlsx
 ```
 
 The workbook must contain a `Merged_Data` worksheet with the exact schema
-checked by `01_lock_and_audit_updated_data.py`. Generated patient-level files
+checked by `01_lock_and_audit_updated_data.py`. Patient-level analysis files
 remain under ignored `analysis/data/` and `analysis/outputs/` directories and
 must not be committed.
 

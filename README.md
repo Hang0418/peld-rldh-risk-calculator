@@ -10,8 +10,8 @@ Online calculator: <https://hang0418.github.io/peld-rldh-risk-calculator/>
 
 This repository publishes the minimum code needed to inspect the model-development
 workflow and to reproduce, test, and serve the frozen browser equation. It does
-not contain patient-level data, fitted model binaries, generated predictions,
-development caches, or manuscript files.
+not contain patient-level data, fitted model binaries, prediction outputs, or
+development caches.
 
 ## Published core files
 
@@ -29,7 +29,7 @@ development caches, or manuscript files.
 
 The public analysis workflow is documented in
 [`analysis/README.md`](analysis/README.md). The source workbook, frozen
-patient-level tables, fitted model object, and generated outputs are deliberately
+patient-level tables, fitted model object, and analysis outputs are deliberately
 excluded. The scripts therefore document and audit the exact workflow but require
 authorized local data to execute end to end.
 

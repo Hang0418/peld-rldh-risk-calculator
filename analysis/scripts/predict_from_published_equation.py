@@ -12,13 +12,7 @@ import pandas as pd
 
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_SPEC = (
-    ROOT
-    / "outputs"
-    / "PELD_RLDH_V5_20260810"
-    / "stage15_manuscript_validation"
-    / "published_equation_spec.json"
-)
+DEFAULT_SPEC = ROOT.parent / "model" / "model_specification.json"
 EPSILON = 1e-6
 
 
