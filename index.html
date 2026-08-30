@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Browser-based research calculator for the frozen 8-predictor PELD-RLDH RCS Ridge model.">
+  <title>PELD-RLDH Risk Calculator</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="#top" class="brand"><span>PR</span> PELD-RLDH Risk Calculator</a>
+    <a href="https://github.com/Hang0418/peld-rldh-risk-calculator">Core source</a>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <p class="eyebrow">Frozen multicenter model · PELD_RLDH_V5_20260810</p>
+      <h1>Local, transparent recurrence-risk calculation after PELD</h1>
+      <p>A browser-based research calculator implementing the frozen 8-predictor RCS Ridge model.</p>
+      <div class="notice"><strong>Research use only.</strong> All calculations occur locally in this browser. Patient-entered information is not transmitted or stored.</div>
+    </section>
+
+    <section class="calculator" aria-labelledby="calculator-title">
+      <div class="section-title">
+        <div><p class="eyebrow">Eight prespecified predictors</p><h2 id="calculator-title">Patient inputs</h2></div>
+        <code id="model-version">Loading frozen model…</code>
+      </div>
+
+      <div class="grid">
+        <form id="risk-form" novalidate>
+          <div class="fields">
+            <label>Modic change
+              <select name="Modic_group" required>
+                <option value="">Select one</option><option value="无">None</option><option value="I">Type I</option><option value="II–III">Type II–III</option>
+              </select>
+            </label>
+            <label>Pfirrmann grade
+              <select name="Pfirrmann_group" required>
+                <option value="">Select one</option><option value="I–II">I–II</option><option value="III–IV">III–IV</option><option value="V">V</option>
+              </select>
+            </label>
+            <label>Sagittal range of motion <span>degrees; development range 1–35</span>
+              <input name="sROM/degrees" type="number" step="any" required>
+            </label>
+            <label>Cross-sectional area <span>cm²; development range 1.114–29.494</span>
+              <input name="Cross_sectional_area/cm^2" type="number" step="any" required>
+            </label>
+            <label>Sacral slope <span>degrees; development range 15–49.53</span>
+              <input name="Sacral_slope/degrees" type="number" step="any" required>
+            </label>
+            <label>Age <span>years; development range 12–88.2</span>
+              <input name="Age" type="number" step="any" required>
+            </label>
+            <label>Disc height index <span>development range 0.10–0.50</span>
+              <input name="Disc_height_index" type="number" step="any" required>
+            </label>
+            <label>Herniation type
+              <select name="Herniation_type" required>
+                <option value="">Select one</option><option value="protrusion">Protrusion</option><option value="extrusion">Extrusion</option><option value="sequestration">Sequestration</option>
+              </select>
+            </label>
+          </div>
+          <div id="messages" aria-live="polite"></div>
+          <div class="actions">
+            <button type="submit">Calculate probability</button>
+            <button type="button" class="secondary" id="example">Load verified example</button>
+            <button type="reset" class="secondary">Reset</button>
+          </div>
+        </form>
+
+        <aside class="result" aria-live="polite">
+          <p class="eyebrow">Frozen-model result</p>
+          <div class="probability" id="probability">—</div>
+          <p id="stratum">Complete all eight fields.</p>
+          <div class="scale"><span></span><i id="marker"></i></div>
+          <div class="scale-labels"><span>0%</span><span>25%</span><span>50%</span><span>75%+</span></div>
+          <section id="contributions" hidden>
+            <h3>Largest model contributions</h3>
+            <p>Associational model contributions relative to the development reference profile; they are not causal effects.</p>
+            <div id="contribution-bars"></div>
+          </section>
+        </aside>
+      </div>
+    </section>
+
+    <section class="evidence">
+      <h2>Verification and use boundary</h2>
+      <p>The browser equation is independently checked against 72 deterministic synthetic cases from the reference Python implementation. No patient records are included in this repository.</p>
+      <p>H5 and H6 were not used for feature selection, tuning, calibration, or model choice. Local validation and prospective impact evaluation are required before routine clinical implementation.</p>
+      <p class="hash">Frozen model SHA-256: <code>8e81fd2dc45af5ca6792eddf3cf93934d6b62406758be0c071a0c8e7ed41f0a2</code></p>
+    </section>
+  </main>
+
+  <footer>Research and reproducibility companion · No patient data transmission or storage</footer>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

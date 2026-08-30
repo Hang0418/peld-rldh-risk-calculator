@@ -1,4 +1,4 @@
-name: Deploy calculator to GitHub Pages
+name: Verify and deploy core calculator
 
 on:
   workflow_dispatch:
@@ -15,29 +15,31 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  verify:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
-          version: 11.16.0
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: pnpm
+          node-version: 24
+      - run: npm test
+      - run: |
+          mkdir -p _site/lib _site/model
+          cp index.html styles.css app.js _site/
+          cp lib/calculator.mjs _site/lib/
+          cp model/model_specification.json _site/model/
+          touch _site/.nojekyll
       - uses: actions/configure-pages@v5
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm run build:pages
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         with:
-          path: dist/client
+          path: _site
+
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: verify
     steps:
       - name: Deploy
         id: deployment
